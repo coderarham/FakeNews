@@ -44,15 +44,15 @@ cd ..
 
 Download and extract these files to project root:
 
-1. **ML Models (67 MB)** - [Download Link](YOUR_DRIVE_LINK_1)
+1. **ML Models (67 MB)** - [Download Link](https://drive.google.com/file/d/16E9Oh1s0pGyPxdqFRvNRJbSKrOXE2cb1/view?usp=sharing)
    - Extract to `models/` folder
    - Contains: 5 ML classifiers + metrics
 
-2. **BiLSTM Model (32 MB)** - [Download Link](YOUR_DRIVE_LINK_2)
+2. **BiLSTM Model (32 MB)** - [Download Link](https://drive.google.com/file/d/1r_hzw1MrU7gbkMrHE3NGCu6yyCKMczSL/view?usp=sharing)
    - Extract to `saved_model/` folder
    - Contains: attention_bilstm_model.keras + tokenizer.pkl
 
-3. **TF-IDF Vectorizer (5 MB)** - [Download Link](YOUR_DRIVE_LINK_3)
+3. **TF-IDF Vectorizer (5 MB)** - [Download Link](https://drive.google.com/file/d/1TCyNMwwbw3dUT6JcwHdTJu1bDR0sj30f/view?usp=sharing)
    - Extract to project root
    - File: tfidf_vectorizer.pkl
 
