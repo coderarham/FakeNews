@@ -43,14 +43,11 @@ desktop.ini
 # Environment Variables
 .env
 
-# Models (too large for GitHub)
-models/*.pkl
-saved_model/*.keras
-saved_model/*.h5
-saved_model/*.pb
-*.pkl
-*.h5
-*.keras
+# Models - Now included in repo
+# models/*.pkl
+# saved_model/*.keras
+# saved_model/*.h5
+# saved_model/*.pb
 
 # Keep model directory structure
 !models/.gitkeep
