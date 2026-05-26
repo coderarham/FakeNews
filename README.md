@@ -22,27 +22,43 @@ TruthLens is a comprehensive fake news detection system developed by **Team Logi
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/coderarham/FakeNews.git
+cd FakeNews
+```
+
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+cd frontend
+npm install
+cd ..
 ```
 
-### 2. Download ISOT Dataset
+### 3. Download Pre-trained Models
+
+**Option A: Download from Google Drive (Recommended)**
+
+Download and extract these files to project root:
+
+1. **ML Models (67 MB)** - [Download Link](YOUR_DRIVE_LINK_1)
+   - Extract to `models/` folder
+   - Contains: 5 ML classifiers + metrics
+
+2. **BiLSTM Model (32 MB)** - [Download Link](YOUR_DRIVE_LINK_2)
+   - Extract to `saved_model/` folder
+   - Contains: attention_bilstm_model.keras + tokenizer.pkl
+
+3. **TF-IDF Vectorizer (5 MB)** - [Download Link](YOUR_DRIVE_LINK_3)
+   - Extract to project root
+   - File: tfidf_vectorizer.pkl
+
+**Option B: Train Models Yourself**
 
 Download `Fake.csv` and `True.csv` from [ISOT Fake News Dataset](https://www.uvic.ca/engineering/ece/isot/datasets/fake-news/index.php) and place them in the project root.
-
-### 3. Set API Keys
-
-Create a `.env` file or set environment variables:
-
-```bash
-export NEWSAPI_KEY="your_newsapi_key"
-export GROQ_API_KEY="your_groq_key"
-export GOOGLE_GENAI_KEY="your_gemini_key"
-```
-
-### 4. Train Models
 
 ```bash
 # Train ML classifiers (5-10 minutes)
@@ -50,9 +66,22 @@ python train_ml.py
 
 # Train Deep Learning model (30-60 minutes)
 python train_dl.py
+```
 
-# Generate dataset audit report
-python generate_dataset_audit.py
+### 4. Set API Keys
+
+Create a `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Add your API keys:
+
+```bash
+NEWSAPI_KEY=your_newsapi_key
+GROQ_API_KEY=your_groq_key
+GOOGLE_GENAI_KEY=your_gemini_key
 ```
 
 ### 5. Run Application
@@ -67,7 +96,7 @@ npm run dev
 ```
 
 Open browser at:
-- **Frontend:** `http://localhost:5173`
+- **Frontend:** `http://localhost:3000`
 - **Backend API:** `http://localhost:5000`
 
 ---
