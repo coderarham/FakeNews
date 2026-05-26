@@ -1,0 +1,296 @@
+================================================================================
+                    LOW CONFIDENCE TEST ARTICLES
+                    Yeh Articles Variable Confidence Dikhayenge
+================================================================================
+
+Instructions:
+- Yeh articles deliberately ambiguous hain
+- Confidence 40-80% range mein aayega
+- Proof hai ki system hardcoded nahi hai
+- Models disagree karenge
+
+================================================================================
+TEST A: AMBIGUOUS - Partially True Science Claim (Expected: 60-75% confidence)
+================================================================================
+
+Scientists at MIT have developed a new battery technology that could revolutionize 
+electric vehicles. The lithium-metal batteries show promising results in laboratory 
+tests, with energy density improvements of up to 50%. However, commercial viability 
+remains uncertain as the technology faces challenges with durability and cost. 
+Researchers estimate it may take 5-10 years before mass production is feasible.
+
+Expected Results:
+- ML: FAKE 60-80% (cautious - mentions "promising" but also "uncertain")
+- DL: FAKE 70-85% (detects mixed signals)
+- LLM: REAL 65-75% (understands nuanced scientific reporting)
+- Swarm: LIKELY_REAL 60-70% (some credible sources may have similar news)
+
+Why Low Confidence:
+- Mix of positive and cautious language
+- Real science but speculative timeline
+- Not sensational but not fully verified
+- Borderline between breakthrough and hype
+
+================================================================================
+TEST B: NEUTRAL - Generic Business News (Expected: 50-70% confidence)
+================================================================================
+
+Tech company announces quarterly earnings beat expectations. Revenue increased 
+by 12% compared to last year. CEO expressed optimism about future growth prospects. 
+Analysts have mixed reactions to the results. Stock price fluctuated in after-hours 
+trading. Company plans to expand operations in Asian markets next year.
+
+Expected Results:
+- ML: FAKE 55-70% (generic language, no specific details)
+- DL: FAKE 60-75% (lacks distinctive patterns)
+- LLM: UNCERTAIN 50-65% (too vague to verify)
+- Swarm: INCONCLUSIVE 40-60% (no specific company name to verify)
+
+Why Low Confidence:
+- No specific company mentioned
+- Generic business language
+- Could be real or fabricated
+- Lacks verifiable details
+
+================================================================================
+TEST C: SATIRICAL - Borderline Satire (Expected: 55-75% confidence)
+================================================================================
+
+Local man discovers that turning off notifications actually makes phone last longer. 
+Experts are shocked by this revolutionary finding. "We never thought of that," 
+admits tech industry insider. The discovery could save millions of people from 
+constantly charging their devices. Apple and Samsung have yet to comment on this 
+groundbreaking revelation that anyone could have figured out years ago.
+
+Expected Results:
+- ML: FAKE 70-85% (detects sarcasm patterns)
+- DL: FAKE 75-90% (unusual writing style)
+- LLM: FAKE 60-75% (understands satire but not extreme)
+- Swarm: LIKELY_FAKE 55-70% (satirical tone but not from known satire sites)
+
+Why Low Confidence:
+- Satirical but not obviously fake
+- Contains truth (notifications do drain battery)
+- Sarcastic tone but plausible content
+- Not from known satire source
+
+================================================================================
+TEST D: OPINION PIECE - Subjective Content (Expected: 45-65% confidence)
+================================================================================
+
+The current state of social media is concerning. Many users report feeling 
+overwhelmed by constant updates and notifications. Some experts believe this 
+could be affecting mental health. However, others argue that social media 
+provides valuable connections. The debate continues among researchers and 
+psychologists. More studies are needed to understand the full impact.
+
+Expected Results:
+- ML: REAL 50-65% (neutral language, no sensationalism)
+- DL: REAL 55-70% (opinion piece pattern)
+- LLM: REAL 60-75% (recognizes opinion/analysis format)
+- Swarm: INCONCLUSIVE 45-60% (subjective content, hard to verify)
+
+Why Low Confidence:
+- Opinion-based, not fact-based
+- No specific claims to verify
+- Balanced presentation
+- Lacks concrete evidence
+
+================================================================================
+TEST E: OUTDATED NEWS - Old But Real (Expected: 50-70% confidence)
+================================================================================
+
+NASA's Curiosity rover has discovered evidence of ancient water on Mars. 
+The findings suggest that Mars may have once had conditions suitable for life. 
+Scientists are analyzing rock samples collected by the rover. The discovery 
+adds to growing evidence that Mars had a wetter past. Further exploration 
+missions are planned to investigate these findings.
+
+Expected Results:
+- ML: FAKE 60-75% (old news, not in training data)
+- DL: FAKE 65-80% (pattern doesn't match recent training)
+- LLM: REAL 70-85% (recognizes legitimate Mars news)
+- Swarm: LIKELY_REAL 65-80% (credible sources have this story)
+
+Why Low Confidence:
+- Real news but from years ago (2012-2015)
+- Models trained on 2015-2017 data
+- Not recent enough to be "breaking"
+- Legitimate but dated
+
+================================================================================
+TEST F: EXAGGERATED TRUTH - Clickbait Real News (Expected: 55-75% confidence)
+================================================================================
+
+You Won't Believe What This New Study Says About Coffee! Researchers found 
+that drinking 3-4 cups of coffee daily may be associated with certain health 
+benefits. The study, published in a medical journal, analyzed data from 
+thousands of participants. However, experts caution that correlation does 
+not equal causation. More research is needed to confirm these findings.
+
+Expected Results:
+- ML: FAKE 65-80% (clickbait language detected)
+- DL: FAKE 70-85% (sensational headline)
+- LLM: REAL 60-75% (understands clickbait but real study)
+- Swarm: LIKELY_REAL 55-70% (real study but exaggerated presentation)
+
+Why Low Confidence:
+- Clickbait headline but real content
+- Sensational language + legitimate research
+- Mixed signals (hype + caution)
+- Borderline between news and clickbait
+
+================================================================================
+TEST G: UNVERIFIED RUMOR - Possible But Unconfirmed (Expected: 40-60% confidence)
+================================================================================
+
+Sources close to the company suggest that a major tech firm may be planning 
+layoffs next quarter. The information comes from anonymous employees who 
+claim to have seen internal documents. Company representatives declined to 
+comment on the rumors. Industry analysts say such moves would not be surprising 
+given current economic conditions. No official announcement has been made.
+
+Expected Results:
+- ML: FAKE 55-70% (anonymous sources, unverified)
+- DL: FAKE 60-75% (rumor pattern detected)
+- LLM: UNCERTAIN 45-60% (recognizes unverified claim)
+- Swarm: INCONCLUSIVE 40-55% (no credible confirmation)
+
+Why Low Confidence:
+- Unverified rumor
+- Anonymous sources
+- No official confirmation
+- Could be true or false
+- Lacks concrete evidence
+
+================================================================================
+TEST H: MIXED FACTS - Partially Correct (Expected: 50-70% confidence)
+================================================================================
+
+Electric vehicles are becoming more popular worldwide. Sales increased by 
+40% last year according to industry reports. However, charging infrastructure 
+remains a challenge in many regions. Some experts predict that by 2030, 
+half of all new cars sold will be electric. Critics argue that battery 
+production has environmental costs that are often overlooked.
+
+Expected Results:
+- ML: REAL 55-70% (balanced reporting)
+- DL: REAL 60-75% (neutral tone)
+- LLM: REAL 65-80% (recognizes factual reporting)
+- Swarm: LIKELY_REAL 60-75% (verifiable statistics)
+
+Why Low Confidence:
+- Mix of facts and predictions
+- Some stats verifiable, some not
+- Balanced pros and cons
+- Not extreme in either direction
+
+================================================================================
+TEST I: VAGUE CLAIM - Lacks Specifics (Expected: 45-65% confidence)
+================================================================================
+
+A recent study shows that people who exercise regularly tend to be healthier. 
+Researchers found a correlation between physical activity and overall wellbeing. 
+The study involved participants from various age groups. Results suggest that 
+even moderate exercise can have benefits. Health professionals recommend 
+incorporating physical activity into daily routines.
+
+Expected Results:
+- ML: REAL 50-65% (generic health advice)
+- DL: REAL 55-70% (common knowledge pattern)
+- LLM: REAL 60-75% (recognizes general health information)
+- Swarm: INCONCLUSIVE 45-60% (too vague to verify specific study)
+
+Why Low Confidence:
+- Extremely vague and generic
+- No specific study cited
+- Common knowledge presented as news
+- Lacks verifiable details
+
+================================================================================
+TEST J: FUTURE PREDICTION - Speculative (Expected: 40-60% confidence)
+================================================================================
+
+Experts predict that artificial intelligence will transform the job market 
+over the next decade. Some jobs may become automated while new roles will 
+emerge. Economists have varying opinions on the overall impact. Companies 
+are investing heavily in AI technology. Workers are advised to develop 
+skills that complement automation. The exact timeline remains uncertain.
+
+Expected Results:
+- ML: REAL 50-65% (neutral prediction)
+- DL: REAL 55-70% (future-focused language)
+- LLM: REAL 60-75% (recognizes legitimate speculation)
+- Swarm: INCONCLUSIVE 45-60% (predictions can't be verified)
+
+Why Low Confidence:
+- Future prediction, not current fact
+- Speculative content
+- No concrete claims to verify
+- Opinion-based forecasting
+
+================================================================================
+                            TESTING STRATEGY
+================================================================================
+
+Test Order (Best to Worst Confidence):
+
+1. TEST A (Science) - 60-75% - Partially verifiable
+2. TEST F (Coffee) - 55-75% - Clickbait but real
+3. TEST H (EV) - 50-70% - Mixed facts
+4. TEST E (Mars) - 50-70% - Old but real
+5. TEST D (Opinion) - 45-65% - Subjective
+6. TEST I (Exercise) - 45-65% - Too vague
+7. TEST B (Business) - 50-70% - Generic
+8. TEST C (Satire) - 55-75% - Borderline satire
+9. TEST G (Rumor) - 40-60% - Unverified
+10. TEST J (AI Future) - 40-60% - Speculative
+
+Expected Pattern:
+- Obvious FAKE (cancer cure): 95-100% confidence
+- Borderline/Ambiguous: 40-75% confidence
+- Obvious REAL (UN climate): 80-95% confidence
+
+This proves system is NOT hardcoded!
+
+================================================================================
+                            WHAT TO OBSERVE
+================================================================================
+
+1. Confidence Variation:
+   - High confidence (90-100%): Obvious fake/real
+   - Medium confidence (60-80%): Borderline cases
+   - Low confidence (40-60%): Ambiguous/unverifiable
+
+2. Model Disagreement:
+   - ML vs DL vs LLM will show different results
+   - Proves each model has different strengths
+
+3. Verdict Variety:
+   - FAKE, LIKELY_FAKE, INCONCLUSIVE, LIKELY_REAL, REAL
+   - Not just binary FAKE/REAL
+
+4. Reasoning Quality:
+   - LLM should explain WHY confidence is low
+   - Agent Swarm should show lack of evidence
+
+================================================================================
+                            SUCCESS CRITERIA
+================================================================================
+
+System is working correctly if:
+✓ Confidence varies (not always 100%)
+✓ Models disagree on borderline cases
+✓ INCONCLUSIVE verdicts appear
+✓ Reasoning explains uncertainty
+✓ Agent Swarm shows mixed/no evidence
+
+System is hardcoded if:
+✗ Always 100% confidence
+✗ All models always agree
+✗ Never shows INCONCLUSIVE
+✗ Same result for different articles
+
+================================================================================
+
+Test karo aur dekho - confidence vary karega! 🚀

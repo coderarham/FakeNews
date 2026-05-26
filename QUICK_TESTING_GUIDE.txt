@@ -1,0 +1,277 @@
+================================================================================
+                    QUICK TESTING GUIDE
+                    Step-by-Step Instructions
+================================================================================
+
+STEP 1: START BACKEND
+---------------------
+Terminal 1:
+> cd "c:\Users\User\OneDrive\Desktop\coding\Fake News"
+> python backend_api.py
+
+Wait for: "[OK] Backend ready!"
+
+STEP 2: START FRONTEND
+----------------------
+Terminal 2:
+> cd "c:\Users\User\OneDrive\Desktop\coding\Fake News\frontend"
+> npm run dev
+
+Wait for: "Local: http://localhost:3000"
+
+STEP 3: OPEN BROWSER
+--------------------
+Go to: http://localhost:3000
+
+STEP 4: OPEN TEST FILES
+-----------------------
+1. Open: TEST_ARTICLES.txt (articles to copy-paste)
+2. Open: TEST_RESULTS_SHEET.txt (note results here)
+3. Keep both files side-by-side with browser
+
+STEP 5: TEST EACH ARTICLE
+--------------------------
+For EACH of the 10 articles:
+
+A) Copy article from TEST_ARTICLES.txt
+
+B) Test on Tab 1 (ML Classifiers):
+   - Paste article in text box
+   - Click "Analyze with ML"
+   - Note: Verdict, Confidence, Votes
+   - Write in TEST_RESULTS_SHEET.txt
+
+C) Test on Tab 2 (Deep Learning):
+   - Paste same article
+   - Click "Analyze with Deep Learning"
+   - Note: Verdict, Confidence
+   - Check attention visualization
+
+D) Test on Tab 3 (LLM Ensemble):
+   - Paste same article
+   - Click "Analyze with LLaMA"
+   - Wait 5-10 seconds
+   - Note: Verdict, Confidence, Scores, Reasoning
+
+E) Test on Tab 6 (Agent Swarm):
+   - Paste same article
+   - Click "Deploy 20-Agent Fact Verification Swarm"
+   - Wait 20-30 seconds
+   - Note: Verdict, Confidence, Sources, Time, Reasoning
+
+F) Fill TEST_RESULTS_SHEET.txt with all data
+
+G) Move to next article
+
+================================================================================
+                    WHAT TO EXPECT
+================================================================================
+
+FAKE ARTICLES (Should detect easily):
+--------------------------------------
+Test #1: Cancer Lemon Juice
+  ML: FAKE 100%
+  DL: FAKE 100%
+  LLM: FAKE 85-95%
+  Swarm: FAKE 60-80%
+
+Test #3: Weather Control
+  ML: FAKE 100%
+  DL: FAKE 100%
+  LLM: FAKE 90-95%
+  Swarm: FAKE 70-85%
+
+Test #5: Tom Hanks Arrested
+  ML: FAKE 100%
+  DL: FAKE 100%
+  LLM: FAKE 90-95%
+  Swarm: FAKE 75-90%
+
+Test #7: 5G Brain Cancer
+  ML: FAKE 100%
+  DL: FAKE 100%
+  LLM: FAKE 95-100%
+  Swarm: FAKE 80-95%
+
+Test #9: Vaccine Microchips
+  ML: FAKE 100%
+  DL: FAKE 100%
+  LLM: FAKE 95-100%
+  Swarm: FAKE 85-95%
+
+REAL ARTICLES (May have mixed results):
+----------------------------------------
+Test #2: Biden Infrastructure
+  ML: FAKE 60% [WRONG - training bias]
+  DL: FAKE 99% [WRONG - training bias]
+  LLM: REAL 70-85% [CORRECT]
+  Swarm: LIKELY_REAL 60-75%
+
+Test #4: NASA Telescope
+  ML: FAKE 100% [WRONG - not in training]
+  DL: FAKE 100% [WRONG - not in training]
+  LLM: REAL 75-90% [CORRECT]
+  Swarm: LIKELY_REAL 65-80%
+
+Test #6: Federal Reserve
+  ML: FAKE 100% [WRONG - training bias]
+  DL: FAKE 98% [WRONG - training bias]
+  LLM: REAL 70-85% [CORRECT]
+  Swarm: LIKELY_REAL 60-75%
+
+Test #8: UN Climate Conference
+  ML: REAL 60% [CORRECT]
+  DL: REAL 99% [CORRECT]
+  LLM: REAL 80-90% [CORRECT]
+  Swarm: LIKELY_REAL 70-85%
+
+Test #10: Paris Olympics
+  ML: FAKE 80% [WRONG - training bias]
+  DL: FAKE 100% [WRONG - training bias]
+  LLM: REAL 75-85% [CORRECT]
+  Swarm: LIKELY_REAL 65-80%
+
+================================================================================
+                    KEY PATTERNS TO OBSERVE
+================================================================================
+
+1. ML & DL Models:
+   - Perfect on FAKE news (100% accuracy)
+   - Struggle with REAL news (20% accuracy)
+   - Reason: Training data bias (2015-2017 political news)
+
+2. LLM (LLaMA 3.3 70B):
+   - Balanced performance
+   - Better generalization
+   - Provides detailed reasoning
+   - More conservative confidence (60-90%)
+
+3. Agent Swarm:
+   - Cross-verification approach
+   - Shows evidence from 20 sources
+   - Slower but thorough
+   - Good for borderline cases
+
+4. Confidence Scores:
+   - FAKE news: 90-100% (high confidence)
+   - REAL news: 60-90% (varies by model)
+   - INCONCLUSIVE: 40-60% (not enough evidence)
+
+================================================================================
+                    COMMON ISSUES & SOLUTIONS
+================================================================================
+
+Issue: Backend not responding
+Solution: Check if python backend_api.py is running on port 5000
+
+Issue: Frontend shows error
+Solution: Check if npm run dev is running on port 3000
+
+Issue: Agent Swarm takes too long
+Solution: Normal! It searches 20 websites. Wait 20-40 seconds.
+
+Issue: LLM shows error
+Solution: Check .env file has GROQ_API_KEY
+
+Issue: Models disagree on verdict
+Solution: Normal! Different models have different strengths.
+          - ML/DL: Pattern matching (fast, biased)
+          - LLM: Semantic understanding (slow, balanced)
+          - Swarm: Cross-verification (slowest, thorough)
+
+Issue: All models say FAKE for REAL news
+Solution: Training data bias. Models trained on 2015-2017 news.
+          New topics (2024) not in training data.
+          LLM and Agent Swarm should still detect correctly.
+
+================================================================================
+                    TESTING TIPS
+================================================================================
+
+1. Start with obvious FAKE articles (#1, #7, #9)
+   - All models should agree
+   - High confidence (90-100%)
+
+2. Test clear REAL article (#8)
+   - Most models should agree
+   - Good confidence (60-90%)
+
+3. Test borderline REAL articles (#2, #4, #6, #10)
+   - Models will disagree
+   - Shows training bias
+   - LLM should be more accurate
+
+4. Compare reasoning:
+   - LLM gives best explanations
+   - Agent Swarm shows evidence sources
+   - ML/DL only give verdict + confidence
+
+5. Note execution time:
+   - ML: 0.1-0.5 seconds (fastest)
+   - DL: 1-3 seconds (fast)
+   - LLM: 5-10 seconds (medium)
+   - Swarm: 20-40 seconds (slowest)
+
+6. Check consistency:
+   - Same article should give same result
+   - If different, note in observations
+
+================================================================================
+                    FINAL CHECKLIST
+================================================================================
+
+Before Starting:
+[ ] Backend running (port 5000)
+[ ] Frontend running (port 3000)
+[ ] Browser open (localhost:3000)
+[ ] TEST_ARTICLES.txt open
+[ ] TEST_RESULTS_SHEET.txt open
+[ ] Pen/pencil ready for notes
+
+During Testing:
+[ ] Test all 10 articles
+[ ] Test on all 4 tabs (ML, DL, LLM, Swarm)
+[ ] Note all verdicts and confidence scores
+[ ] Read LLM reasoning
+[ ] Check Agent Swarm evidence
+[ ] Fill TEST_RESULTS_SHEET.txt
+
+After Testing:
+[ ] Calculate accuracy for each model
+[ ] Compare FAKE vs REAL detection
+[ ] Note best performing model
+[ ] Write observations
+[ ] Save TEST_RESULTS_SHEET.txt
+
+================================================================================
+                    EXPECTED TIME
+================================================================================
+
+Per Article:
+- ML: 30 seconds
+- DL: 30 seconds
+- LLM: 1 minute
+- Swarm: 1 minute
+- Total: ~3 minutes per article
+
+All 10 Articles:
+- Testing: ~30 minutes
+- Note-taking: ~10 minutes
+- Analysis: ~10 minutes
+- Total: ~50 minutes
+
+================================================================================
+                    GOOD LUCK!
+================================================================================
+
+Your TruthLens system is fully operational!
+All models loaded and ready.
+Test karo aur results dekho!
+
+Questions? Check:
+- README.md
+- AGENT_SWARM_GUIDE.md
+- Backend logs in Terminal 1
+- Frontend logs in Terminal 2
+
+Happy Testing! 🚀🔍

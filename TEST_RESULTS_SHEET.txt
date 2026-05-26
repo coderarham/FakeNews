@@ -1,0 +1,356 @@
+================================================================================
+                    TRUTHLENS TEST RESULTS SHEET
+                    Yahan Apne Results Note Karo
+================================================================================
+
+Date: _____________
+Tester Name: _____________
+
+================================================================================
+TEST #1: FAKE - Health Conspiracy (Cancer Lemon Juice)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+  Votes: ___/5 models voted FAKE
+  Individual Models:
+    - Decision Tree: ___________
+    - Gradient Boosting: ___________
+    - Linear SVC: ___________
+    - Logistic Regression: ___________
+    - Random Forest: ___________
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+  Fake Probability: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Factual Consistency: _______%
+  Sensationalism: _______%
+  Source Credibility: _______%
+  Writing Style: _______%
+  Reasoning: _________________________________________________
+  ____________________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources Found: ___/16
+  Unreliable Sources Found: ___/4
+  Execution Time: _____s
+  Keywords: __________________________________________________
+  Reasoning: _________________________________________________
+  ____________________________________________________________
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #2: REAL - Politics (Biden Infrastructure)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+  Votes: ___/5 models voted FAKE
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Unreliable Sources: ___/4
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #3: FAKE - Political Conspiracy (Weather Control)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+  Votes: ___/5
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #4: REAL - Science (NASA James Webb Telescope)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #5: FAKE - Celebrity Hoax (Tom Hanks Arrested)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #6: REAL - Business (Federal Reserve Interest Rate)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #7: FAKE - Technology Hoax (5G Brain Cancer)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #8: REAL - Environment (UN Climate Conference)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #9: FAKE - Vaccine Misinformation (COVID Microchips)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+TEST #10: REAL - Sports (Paris Olympics 2024)
+================================================================================
+
+ML Classifiers:
+  Verdict: ___________
+  Confidence: _______%
+
+Deep Learning (BiLSTM):
+  Verdict: ___________
+  Confidence: _______%
+
+LLM (LLaMA 3.3 70B):
+  Verdict: ___________
+  Confidence: _______%
+  Reasoning: _________________________________________________
+
+Agent Swarm:
+  Verdict: ___________
+  Confidence: _______%
+  Credible Sources: ___/16
+  Time: _____s
+
+Overall Match: [ ] CORRECT  [ ] WRONG
+
+================================================================================
+                            FINAL SUMMARY
+================================================================================
+
+ML Classifiers:
+  Correct: ___/10 = ______%
+  FAKE Detection: ___/5 = ______%
+  REAL Detection: ___/5 = ______%
+  Average Confidence: ______%
+
+Deep Learning (BiLSTM):
+  Correct: ___/10 = ______%
+  FAKE Detection: ___/5 = ______%
+  REAL Detection: ___/5 = ______%
+  Average Confidence: ______%
+
+LLM (LLaMA 3.3 70B):
+  Correct: ___/10 = ______%
+  FAKE Detection: ___/5 = ______%
+  REAL Detection: ___/5 = ______%
+  Average Confidence: ______%
+
+Agent Swarm:
+  Correct: ___/10 = ______%
+  FAKE Detection: ___/5 = ______%
+  REAL Detection: ___/5 = ______%
+  Average Confidence: ______%
+  Average Time: _____s
+
+================================================================================
+                            OBSERVATIONS
+================================================================================
+
+Best Model for FAKE Detection: _____________________________________
+
+Best Model for REAL Detection: _____________________________________
+
+Fastest Model: _____________________________________
+
+Most Accurate Overall: _____________________________________
+
+Most Detailed Reasoning: _____________________________________
+
+================================================================================
+                            NOTES
+================================================================================
+
+Interesting Findings:
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+
+Issues Encountered:
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+
+Suggestions for Improvement:
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+
+================================================================================
+                            CONCLUSION
+================================================================================
+
+Overall System Performance: [ ] Excellent  [ ] Good  [ ] Average  [ ] Poor
+
+Recommendation: ________________________________________________
+____________________________________________________________
+____________________________________________________________
+
+Tested By: _____________
+Date: _____________
+Signature: _____________
+
+================================================================================
