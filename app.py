@@ -373,7 +373,12 @@ with tab2:
                 
                 pred_prob = dl_model.predict(X_dl, verbose=0)[0][0]
                 verdict_dl = "FAKE" if pred_prob > 0.5 else "REAL"
-                confidence_dl = pred_prob if pred_prob > 0.5 else 1 - pred_prob
+                
+                # Calculate confidence properly
+                if pred_prob > 0.5:
+                    confidence_dl = 0.5 + (pred_prob - 0.5)  # Maps 0.5-1.0 to 0.5-1.0
+                else:
+                    confidence_dl = 0.5 + (0.5 - pred_prob)  # Maps 0.0-0.5 to 1.0-0.5
                 
                 st.markdown("### 🎯 Neural Network Verdict")
                 if verdict_dl == "REAL":

@@ -15,12 +15,12 @@ function App() {
   const [presetArticle, setPresetArticle] = useState(null)
 
   const tabs = [
-    { id: 0, name: 'ML Ensemble', icon: '🤖' },
-    { id: 1, name: 'Attention BiLSTM', icon: '🧠' },
-    { id: 2, name: 'LLM Ensemble', icon: '💬' },
-    { id: 3, name: 'Dataset Audit', icon: '📊' },
-    { id: 4, name: 'Live Intel', icon: '🌐' },
-    { id: 5, name: 'Agent Swarm', icon: '🕷️' }
+    { id: 0, name: 'ML Ensemble', icon: '' },
+    { id: 1, name: 'Attention BiLSTM', icon: '' },
+    { id: 2, name: 'LLM Ensemble', icon: '' },
+    { id: 3, name: 'Dataset Audit', icon: '' },
+    { id: 4, name: 'Live Intel', icon: '' },
+    { id: 5, name: 'Agent Swarm', icon: '' }
   ]
 
   const renderContent = () => {
@@ -94,7 +94,6 @@ function App() {
                       : 'text-gray-400 hover:text-white hover:bg-slate-700/50'
                   }`}
                 >
-                  <span className="mr-2">{tab.icon}</span>
                   {tab.name}
                 </button>
               ))}
@@ -110,7 +109,7 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-slate-900 border-t border-cyan-500/30 py-4 text-center text-gray-400">
-        <p>Built with ❤️ by Team Logic Lords | Heritage Institute of Technology</p>
+        <p>Built by VerifAI | Techno India University</p>
       </footer>
     </div>
   )

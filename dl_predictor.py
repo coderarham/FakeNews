@@ -86,7 +86,15 @@ class DLPredictor:
             # Predict
             pred = self.model.predict(padded, verbose=0)[0][0]
             verdict = 'FAKE' if pred > 0.5 else 'REAL'
-            confidence = float(pred if pred > 0.5 else 1 - pred)
+            
+            # Calculate confidence properly - scale from raw probability
+            # pred is between 0 and 1, where >0.5 = FAKE, <0.5 = REAL
+            if pred > 0.5:
+                # FAKE: confidence scales from 50% (at 0.5) to 100% (at 1.0)
+                confidence = float(0.5 + (pred - 0.5))  # Maps 0.5-1.0 to 0.5-1.0
+            else:
+                # REAL: confidence scales from 50% (at 0.5) to 100% (at 0.0)
+                confidence = float(0.5 + (0.5 - pred))  # Maps 0.0-0.5 to 1.0-0.5
             
             # Generate attention weights (mock for visualization)
             words = cleaned.split()[:50]  # First 50 words

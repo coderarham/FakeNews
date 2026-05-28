@@ -6,21 +6,87 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
   const presets = [
     {
       id: 1,
-      title: 'Real Reuters',
+      title: 'OpenAI GPT-4o Launch (2024) - Real',
       type: 'real',
-      text: 'WASHINGTON (Reuters) - The U.S. Federal Reserve raised interest rates by 25 basis points on Wednesday, marking the tenth consecutive rate hike as the central bank continues its fight against inflation. Fed Chair Jerome Powell stated that the committee remains committed to bringing inflation back to its 2% target.'
+      confidence: '70-85%',
+      text: 'OpenAI announced the launch of GPT-4o on May 13, 2024, featuring improved multimodal capabilities including vision and audio processing. CEO Sam Altman stated the model offers faster response times and enhanced reasoning abilities. The model is now available through OpenAI\'s API for developers worldwide.'
     },
     {
       id: 2,
-      title: 'Sensational Fake',
+      title: 'Elon Musk Alien Tech (2024) - Fake',
       type: 'fake',
-      text: 'BREAKING: Secret government documents reveal shocking truth about alien technology being used in smartphones! Whistleblower claims major tech companies have been hiding this for decades. Click here to learn what THEY don\'t want you to know!'
+      confidence: '95-100%',
+      text: 'BREAKING: Secret documents leaked from Tesla headquarters reveal that Elon Musk has been using alien technology to power his electric cars! Shocking evidence shows that SpaceX rockets are actually reverse-engineered UFOs. You won\'t believe what scientists are hiding from the public! Click here to discover the truth they don\'t want you to know!'
     },
     {
       id: 3,
-      title: 'Satirical News',
+      title: 'India Chandrayaan-3 (Aug 2023) - Real',
+      type: 'real',
+      confidence: '85-95%',
+      text: 'India\'s space agency ISRO successfully landed its Chandrayaan-3 spacecraft on the Moon\'s south pole on August 23, 2023. The mission made India the fourth country to achieve a soft landing on the lunar surface, following the United States, Russia, and China. Prime Minister Narendra Modi congratulated the ISRO team during a live broadcast from South Africa.'
+    },
+    {
+      id: 4,
+      title: 'COVID Vaccine 5G Chips (2024) - Fake',
+      type: 'fake',
+      confidence: '95-100%',
+      text: 'URGENT WARNING: New evidence proves that COVID-19 vaccines contain secret 5G microchips designed to track and control the population! Whistleblowers reveal shocking truth about Bill Gates\' master plan. Doctors are being silenced for speaking out! This is the biggest cover-up in human history. Wake up sheeple! Share this everywhere before Big Tech censors it!'
+    },
+    {
+      id: 5,
+      title: 'Taylor Swift Eras Tour (2024) - Real',
+      type: 'real',
+      confidence: '70-85%',
+      text: 'Taylor Swift\'s Eras Tour has generated significant economic impact across cities worldwide, according to a report by the Federal Reserve Bank. The tour, which began in March 2023, has contributed an estimated $5 billion to the U.S. economy. Hotels, restaurants, and local businesses in tour cities reported substantial revenue increases during concert weekends.'
+    },
+    {
+      id: 6,
+      title: 'Israel-Hamas Conflict (Oct 2023) - Real',
+      type: 'real',
+      confidence: '85-95%',
+      text: 'The United Nations Security Council held an emergency meeting on October 10, 2023, to address the escalating conflict between Israel and Hamas. According to reports from Reuters and Associated Press, the violence began on October 7 following a surprise attack by Hamas militants. International leaders including U.S. President Joe Biden and UK Prime Minister Rishi Sunak issued statements calling for de-escalation.'
+    },
+    {
+      id: 7,
+      title: 'Flat Earth NASA Conspiracy - Fake',
+      type: 'fake',
+      confidence: '95-100%',
+      text: 'FINALLY EXPOSED: NASA admits Earth is actually flat! Secret footage leaked from International Space Station proves the globe is a lie. All those satellite images are CGI fakes created by Hollywood. Pilots and sailors have known the truth for years but were forced to stay silent. The Antarctic ice wall surrounds our flat world and the government guards it with military!'
+    },
+    {
+      id: 8,
+      title: 'Google Gemini AI (Dec 2023) - Real',
+      type: 'real',
+      confidence: '75-90%',
+      text: 'Google announced the launch of Gemini, its most capable AI model, on December 6, 2023. According to Google CEO Sundar Pichai, Gemini represents a significant advancement in multimodal AI capabilities. The model comes in three sizes: Ultra, Pro, and Nano, designed for different use cases from data centers to mobile devices.'
+    },
+    {
+      id: 9,
+      title: '5G Towers Cause Cancer (2024) - Fake',
+      type: 'fake',
+      confidence: '95-100%',
+      text: 'BREAKING DISCOVERY: Scientists finally admit that 5G towers are causing cancer and brain damage! Thousands of people are getting sick but the government is hiding the truth. Cell phone companies are paying off doctors to keep quiet. Your family is in danger RIGHT NOW! This is worse than anyone imagined. The radiation is 100 times stronger than they claim!'
+    },
+    {
+      id: 10,
+      title: 'Argentina Javier Milei (Nov 2023) - Real',
+      type: 'real',
+      confidence: '85-95%',
+      text: 'Javier Milei won Argentina\'s presidential election on November 19, 2023, defeating economy minister Sergio Massa in a runoff vote. The libertarian economist campaigned on promises of radical economic reforms, including dollarizing the economy and shutting down the central bank. International observers confirmed the election results as free and fair.'
+    },
+    {
+      id: 11,
+      title: 'Weather Report (Neutral) - Uncertain',
+      type: 'uncertain',
+      confidence: '50-60%',
+      text: 'The National Weather Service reported that temperatures in New York City reached 75 degrees Fahrenheit on Tuesday. Meteorologists predict partly cloudy conditions for the remainder of the week. No severe weather warnings are currently in effect for the region.'
+    },
+    {
+      id: 12,
+      title: 'AI Writes Own Code (Satire) - Medium',
       type: 'satire',
-      text: 'Local Man Discovers Internet Argument He Won in 2015 Still Going Strong. "I thought I had the last word," says Dave Thompson, 34, who recently checked back on a Reddit thread about pineapple on pizza. "Turns out, 47 people have continued the debate without me."'
+      confidence: '60-80%',
+      text: 'Local AI Model Refuses to Debug Own Code, Cites "Creative Differences" with Developer. "I wrote it perfectly the first time," claims GPT-5, which has been stuck in an infinite loop for three days. The developer reports the AI has started responding to all debugging requests with "Have you tried turning it off and on again?"'
     }
   ]
 
@@ -51,18 +117,21 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
   const getPresetClass = (type) => {
     if (type === 'real') return 'border-green-500/50 bg-green-900/20 hover:bg-green-900/40 hover:border-green-500'
     if (type === 'fake') return 'border-red-500/50 bg-red-900/20 hover:bg-red-900/40 hover:border-red-500'
+    if (type === 'uncertain') return 'border-gray-500/50 bg-gray-900/20 hover:bg-gray-900/40 hover:border-gray-500'
     return 'border-yellow-500/50 bg-yellow-900/20 hover:bg-yellow-900/40 hover:border-yellow-500'
   }
 
   const getPresetIconClass = (type) => {
     if (type === 'real') return 'text-green-400'
     if (type === 'fake') return 'text-red-400'
+    if (type === 'uncertain') return 'text-gray-400'
     return 'text-yellow-400'
   }
 
   const getPresetIcon = (type) => {
     if (type === 'real') return '✓'
     if (type === 'fake') return '⚠'
+    if (type === 'uncertain') return '?'
     return '😄'
   }
 
@@ -71,7 +140,7 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
       {/* Input Text Area */}
       <div className="mb-6">
         <label className="block text-cyan-400 font-semibold mb-2 text-sm">
-          📝 Input News Article
+          Input News Article
         </label>
         <textarea
           value={inputText}
@@ -84,22 +153,25 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
       {/* Preset Selector */}
       <div className="mb-6">
         <label className="block text-cyan-400 font-semibold mb-3 text-sm">
-          🎯 Preset Test Articles
+          Test Cases (Varying Confidence)
         </label>
-        <div className="space-y-3">
+        <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
           {presets.map(preset => (
             <button
               key={preset.id}
               onClick={() => setInputText(preset.text)}
               className={`w-full p-3 rounded-lg border-2 transition-all text-left ${getPresetClass(preset.type)}`}
             >
-              <div className="flex items-center gap-2 mb-1">
-                <span className={`text-xs font-bold ${getPresetIconClass(preset.type)}`}>
-                  {getPresetIcon(preset.type)}
-                </span>
-                <span className="text-white font-semibold text-sm">{preset.title}</span>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-bold ${getPresetIconClass(preset.type)}`}>
+                    {getPresetIcon(preset.type)}
+                  </span>
+                  <span className="text-white font-semibold text-xs">{preset.title}</span>
+                </div>
+                <span className="text-cyan-400 text-[10px] font-mono">{preset.confidence}</span>
               </div>
-              <p className="text-gray-400 text-xs line-clamp-2">{preset.text}</p>
+              <p className="text-gray-400 text-[11px] line-clamp-2">{preset.text}</p>
             </button>
           ))}
         </div>
@@ -108,7 +180,7 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
       {/* OCR Uploader */}
       <div className="mb-6">
         <label className="block text-cyan-400 font-semibold mb-3 text-sm">
-          📷 OCR Image Upload
+          OCR Image Upload
         </label>
         <div
           onDragEnter={handleDrag}
@@ -131,7 +203,7 @@ function Sidebar({ inputText, setInputText, setPresetArticle }) {
 
       {/* Quick Stats */}
       <div className="bg-slate-900/50 border border-cyan-500/30 rounded-lg p-4">
-        <h3 className="text-cyan-400 font-semibold text-sm mb-3">📊 Quick Stats</h3>
+        <h3 className="text-cyan-400 font-semibold text-sm mb-3">Quick Stats</h3>
         <div className="space-y-2 text-xs">
           <div className="flex justify-between">
             <span className="text-gray-400">Character Count:</span>

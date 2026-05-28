@@ -55,9 +55,9 @@ function Header({ biasCorrection, setBiasCorrection }) {
             {/* User Profile */}
             <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-lg border border-cyan-500/30">
               <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                TL
+                VA
               </div>
-              <span className="text-gray-300 text-sm">Team Logic Lords</span>
+              <span className="text-gray-300 text-sm">Team VerifAI</span>
             </div>
           </div>
         </div>

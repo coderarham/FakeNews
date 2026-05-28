@@ -141,7 +141,14 @@ def predict_dl():
         # Majority vote from ML models
         fake_count = sum(ml_predictions)
         is_fake = fake_count >= 3
-        confidence = fake_count / len(ml_predictions) if is_fake else (len(ml_predictions) - fake_count) / len(ml_predictions)
+        
+        # Calculate confidence based on consensus strength
+        # If 5/5 agree: 100%, 4/5: 80%, 3/5: 60%
+        if is_fake:
+            confidence = (fake_count / len(ml_predictions)) * 0.9 + 0.1  # 60-100%
+        else:
+            real_count = len(ml_predictions) - fake_count
+            confidence = (real_count / len(ml_predictions)) * 0.9 + 0.1  # 60-100%
         
         # Generate attention visualization
         words = cleaned.split()[:50]
@@ -308,9 +315,13 @@ def predict_swarm():
         if not text:
             return jsonify({'error': 'No text provided'}), 400
         
+        print(f"[SWARM] Starting swarm for text: {text[:50]}...")
+        
         from fact_swarm import run_swarm
         
+        print("[SWARM] Running swarm...")
         result = run_swarm(text)
+        print(f"[SWARM] Swarm completed in {result.get('elapsed_seconds', 0)}s")
         
         # Transform agent results for frontend
         agents = []
@@ -323,7 +334,7 @@ def predict_swarm():
                 'evidence': agent['evidence']
             })
         
-        return jsonify({
+        response = {
             'verdict': result['verdict']['verdict'],
             'confidence': result['verdict']['confidence'],
             'credible_sources': result['verdict']['credible_sources_found'],
@@ -332,10 +343,21 @@ def predict_swarm():
             'keywords': result['keywords'],
             'agents': agents,
             'elapsed': result['elapsed_seconds']
-        })
+        }
+        
+        print(f"[SWARM] Returning response: {response['verdict']}")
+        return jsonify(response)
     
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import traceback
+        error_msg = str(e)
+        error_trace = traceback.format_exc()
+        print(f"[SWARM ERROR] {error_msg}")
+        print(f"[SWARM TRACE] {error_trace}")
+        return jsonify({
+            'error': error_msg,
+            'trace': error_trace[:500]  # First 500 chars of trace
+        }), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

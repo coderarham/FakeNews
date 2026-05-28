@@ -14,6 +14,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import TfidfVectorizer
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()  # Load .env file
 
 log = logging.getLogger(__name__)
 
@@ -95,11 +98,13 @@ def _agent_search(domain_key: str, keywords: list[str]) -> dict:
                 combined = (title + " " + body).lower()
                 doc_kws = set(combined.split()) & kw_set
                 j = jaccard(kw_set, doc_kws)
-                if j >= 0.30:
+                if j >= 0.08:
                     evidence.append({"title": title, "snippet": body[:200],
                                      "jaccard": round(j, 3), "source": site})
-    except Exception:
-        pass
+    except ImportError:
+        log.warning(f"duckduckgo_search not installed, skipping DDG search for {domain_key}")
+    except Exception as e:
+        log.debug(f"DDG search failed for {domain_key}: {e}")
 
     # Priority 2 – RSS
     if not evidence and rss_url:
@@ -109,12 +114,12 @@ def _agent_search(domain_key: str, keywords: list[str]) -> dict:
                 text = (entry.get("title", "") + " " + entry.get("summary", "")).lower()
                 doc_kws = set(text.split()) & kw_set
                 j = jaccard(kw_set, doc_kws)
-                if j >= 0.30:
+                if j >= 0.08:
                     evidence.append({"title": entry.get("title", ""),
                                      "snippet": entry.get("summary", "")[:200],
                                      "jaccard": round(j, 3), "source": site})
-        except Exception:
-            pass
+        except Exception as e:
+            log.debug(f"RSS feed failed for {domain_key}: {e}")
 
     # Priority 3 – Homepage scrape
     if not evidence:
@@ -126,11 +131,11 @@ def _agent_search(domain_key: str, keywords: list[str]) -> dict:
             for h in headlines[:30]:
                 doc_kws = set(h.lower().split()) & kw_set
                 j = jaccard(kw_set, doc_kws)
-                if j >= 0.30:
+                if j >= 0.08:
                     evidence.append({"title": h, "snippet": "",
                                      "jaccard": round(j, 3), "source": site})
-        except Exception:
-            pass
+        except Exception as e:
+            log.debug(f"Homepage scrape failed for {domain_key}: {e}")
 
     return {
         "domain": domain_key,
@@ -144,21 +149,23 @@ def _agent_search(domain_key: str, keywords: list[str]) -> dict:
 # ── Coordinator (Gemini 2.5 Flash) ────────────────────────────────────────
 def _coordinator_verdict(article_text: str, keywords: list[str],
                           agent_results: list[dict]) -> dict:
-    if GEMINI_KEY == "YOUR_GEMINI_KEY":
+    if not GEMINI_KEY or GEMINI_KEY == "YOUR_GEMINI_KEY":
+        log.warning("Gemini API key not configured, using fallback verdict")
         return _fallback_verdict(agent_results)
 
-    genai.configure(api_key=GEMINI_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash")
+    try:
+        genai.configure(api_key=GEMINI_KEY)
+        model = genai.GenerativeModel("gemini-1.5-pro")  # Changed to pro version
 
-    evidence_summary = []
-    for r in agent_results:
-        for ev in r["evidence"]:
-            evidence_summary.append(
-                f"[{'CREDIBLE' if r['credible'] else 'UNRELIABLE'}] "
-                f"{r['site']}: \"{ev['title']}\" (Jaccard={ev['jaccard']})"
-            )
+        evidence_summary = []
+        for r in agent_results:
+            for ev in r["evidence"]:
+                evidence_summary.append(
+                    f"[{'CREDIBLE' if r['credible'] else 'UNRELIABLE'}] "
+                    f"{r['site']}: \"{ev['title']}\" (Jaccard={ev['jaccard']})"
+                )
 
-    prompt = f"""You are a fact-checking coordinator. Analyze the following article and evidence.
+        prompt = f"""You are a fact-checking coordinator. Analyze the following article and evidence.
 
 ARTICLE KEYWORDS: {', '.join(keywords)}
 
@@ -176,7 +183,6 @@ Based on the evidence, provide a JSON response with:
 
 Respond ONLY with valid JSON."""
 
-    try:
         resp = model.generate_content(prompt)
         text = resp.text.strip()
         # Extract JSON block
@@ -195,20 +201,52 @@ def _fallback_verdict(agent_results: list[dict]) -> dict:
     credible_hits   = sum(1 for r in agent_results if r["credible"] and r["found"])
     unreliable_hits = sum(1 for r in agent_results if not r["credible"] and r["found"])
     total_credible  = len(CREDIBLE_DOMAINS)
-
+    total_unreliable = len(UNRELIABLE_DOMAINS)
+    
+    # Calculate total evidence strength
+    total_evidence = 0
+    for r in agent_results:
+        if r["found"]:
+            for ev in r["evidence"]:
+                total_evidence += ev["jaccard"]
+    
+    # Dynamic confidence based on evidence strength and source count
     if credible_hits >= 5:
-        verdict, conf = "LIKELY_REAL", 0.75
+        # Strong real: 5+ credible sources
+        base_conf = 0.70
+        bonus = min(0.25, (credible_hits - 5) * 0.03)  # +3% per extra source
+        evidence_bonus = min(0.05, total_evidence * 0.02)
+        conf = base_conf + bonus + evidence_bonus
+        verdict = "LIKELY_REAL"
     elif credible_hits >= 2:
-        verdict, conf = "LIKELY_REAL", 0.60
+        # Medium real: 2-4 credible sources
+        base_conf = 0.55
+        bonus = (credible_hits - 2) * 0.05  # +5% per source
+        evidence_bonus = min(0.05, total_evidence * 0.02)
+        conf = base_conf + bonus + evidence_bonus
+        verdict = "LIKELY_REAL"
     elif unreliable_hits >= 2 and credible_hits == 0:
-        verdict, conf = "LIKELY_FAKE", 0.65
+        # Likely fake: unreliable sources only
+        base_conf = 0.60
+        bonus = min(0.15, unreliable_hits * 0.05)
+        conf = base_conf + bonus
+        verdict = "LIKELY_FAKE"
+    elif credible_hits == 1:
+        # Weak real: only 1 credible source
+        conf = 0.50 + min(0.10, total_evidence * 0.05)
+        verdict = "LIKELY_REAL"
     else:
-        verdict, conf = "INCONCLUSIVE", 0.40
+        # Inconclusive: no clear evidence
+        conf = 0.35 + min(0.10, total_evidence * 0.02)
+        verdict = "INCONCLUSIVE"
+    
+    # Cap confidence at 0.95 (never 100% without Gemini)
+    conf = min(0.95, conf)
 
     return {
         "verdict": verdict,
-        "confidence": conf,
-        "reasoning": f"Rule-based: {credible_hits} credible sources, {unreliable_hits} unreliable sources found.",
+        "confidence": round(conf, 2),
+        "reasoning": f"Rule-based: {credible_hits} credible sources, {unreliable_hits} unreliable sources found. Evidence strength: {total_evidence:.2f}",
         "credible_sources_found": credible_hits,
         "unreliable_sources_found": unreliable_hits,
     }
@@ -230,11 +268,20 @@ def run_swarm(article_text: str) -> dict:
             pool.submit(_agent_search, dk, keywords): dk
             for dk in ALL_DOMAINS
         }
-        for fut in as_completed(futures):
+        for fut in as_completed(futures, timeout=90):  # 90 second timeout
             try:
-                agent_results.append(fut.result())
+                agent_results.append(fut.result(timeout=5))  # 5 sec per agent
             except Exception as e:
-                log.warning(f"Agent error: {e}")
+                domain = futures.get(fut, 'unknown')
+                log.warning(f"Agent {domain} error: {e}")
+                # Add empty result for failed agent
+                agent_results.append({
+                    'domain': domain,
+                    'site': ALL_DOMAINS.get(domain, ('', ''))[1] if domain in ALL_DOMAINS else '',
+                    'credible': domain in CREDIBLE_KEYS,
+                    'evidence': [],
+                    'found': False
+                })
 
     verdict = _coordinator_verdict(article_text, keywords, agent_results)
     elapsed = round(time.time() - start, 1)
